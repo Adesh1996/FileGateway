@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.007.001.02">
+  <CstmrPmtRvsl>
+    <GrpHdr>
+      <MsgId>MSG-20250610-210828</MsgId>
+      <CreDtTm>2025-06-10T21:08:28</CreDtTm>
+      <NbOfTxs>5</NbOfTxs>
+      <CtrlSum>600.00</CtrlSum>
+      <GrpRvsl>false</GrpRvsl>
+      <InitgPty>
+        <Nm>EBB LJUBLJANA D.D.</Nm>
+        <Id>
+          <OrgId>
+            <Othr>
+              <Id>12345678</Id>
+              <SchmeNm>
+                <Cd>TXID</Cd>
+              </SchmeNm>
+            </Othr>
+          </OrgId>
+        </Id>
+      </InitgPty>
+      <CdtrAgt>
+        <FinInstnId>
+          <BIC>HAABSI22</BIC>
+        </FinInstnId>
+      </CdtrAgt>
+    </GrpHdr>
+    <OrgnlPmtInfAndRvsl>
+      <RvslPmtInfId>MSG-20250610-210828-B1</RvslPmtInfId>
+      <OrgnlPmtInfId>SDD_120</OrgnlPmtInfId>
+      <OrgnlNbOfTxs>1</OrgnlNbOfTxs>
+      <OrgnlCtrlSum>120.00</OrgnlCtrlSum>
+      <BtchBookg>false</BtchBookg>
+      <PmtInfRvsl>false</PmtInfRvsl>
+      <TxInf>
+        <RvslId>16NP11L2HXVGJYPQ</RvslId>
+        <OrgnlInstrId>DB_05</OrgnlInstrId>
+        <OrgnlEndToEndId>SI00120</OrgnlEndToEndId>
+        <OrgnlInstdAmt Ccy="EUR">120.00</OrgnlInstdAmt>
+        <RvsdInstdAmt Ccy="EUR">120.00</RvsdInstdAmt>
+        <ChrgBr>SLEV</ChrgBr>
+        <RvslRsnInf/>
+        <OrgnlTxRef>
+          <ReqdColltnDt>2013-10-22</ReqdColltnDt>
+          <CdtrSchmeId>
+            <Id>
+              <PrvtId>
+                <Othr>
+                  <Id>SI02ZZZ12345678</Id>
+                  <SchmeNm>
+                    <Prtry>TXID</Prtry>
+                  </SchmeNm>
+                </Othr>
+              </PrvtId>
+            </Id>
+          </CdtrSchmeId>
+          <PmtTpInf>
+            <SvcLvl>
+              <Cd>SEPA</Cd>
+            </SvcLvl>
+            <LclInstrm>
+              <Cd>CORE</Cd>
+            </LclInstrm>
+            <SeqTp>RCUR</SeqTp>
+          </PmtTpInf>
+          <MndtRltdInf>
+            <MndtId>SI00354362</MndtId>
+            <DtOfSgntr>2013
+-07
+-28</DtOfSgntr>
+          </MndtRltdInf>
+          <RmtInf>
+            <Ustrd>PLA
+ČILO STORITEV</Ustrd>
+          </RmtInf>
+          <Dbtr>
+            <Nm>HALCOM D.D.</Nm>
+            <PstlAdr>
+              <Ctry>SI</Ctry>
+              <AdrLine>TR
+Ž
+A
+ŠKA ULICA 118</AdrLine>
+              <AdrLine>LJUBLJANA</AdrLine>
+            </PstlAdr>
+          </Dbtr>
+          <DbtrAcct>
+            <Id>
+              <IBAN>SI56020100258361794</IBAN>
+            </Id>
+          </DbtrAcct>
+          <DbtrAgt>
+            <FinInstnId>
+              <BIC>LJBASI2X</BIC>
+            </FinInstnId>
+          </DbtrAgt>
+          <CdtrAgt>
+            <FinInstnId>
+              <BIC>HAABSI22</BIC>
+            </FinInstnId>
+          </CdtrAgt>
+          <Cdtr>
+            <Nm>EBB LJUBLJANA D.D.</Nm>
+            <PstlAdr>
+              <Ctry>SI</Ctry>
+              <AdrLine>TRŽAŠKA 118</AdrLine>
+              <AdrLine>1000 LJUBLJANA</AdrLine>
+            </PstlAdr>
+          </Cdtr>
+          <CdtrAcct>
+            <Id>
+              <IBAN>SI56330008464683166</IBAN>
+            </Id>
+          </CdtrAcct>
+        </OrgnlTxRef>
+        <EqvtAmt Ccy="EUR">120.00</EqvtAmt>
+      </TxInf>
+      <TxInf>
+        <RvslId>16NP11L2HXVGJYPQ</RvslId>
+        <OrgnlInstrId>DB_05</OrgnlInstrId>
+        <OrgnlEndToEndId>SI00120</OrgnlEndToEndId>
+        <OrgnlInstdAmt Ccy="EUR">120.00</OrgnlInstdAmt>
+        <RvsdInstdAmt Ccy="EUR">120.00</RvsdInstdAmt>
+        <ChrgBr>SLEV</ChrgBr>
+        <RvslRsnInf/>
+        <OrgnlTxRef>
+          <ReqdColltnDt>2013-10-22</ReqdColltnDt>
+          <CdtrSchmeId>
+            <Id>
+              <PrvtId>
+                <Othr>
+                  <Id>SI02ZZZ12345678</Id>
+                  <SchmeNm>
+                    <Prtry>TXID</Prtry>
+                  </SchmeNm>
+                </Othr>
+              </PrvtId>
+            </Id>
+          </CdtrSchmeId>
+          <PmtTpInf>
+            <SvcLvl>
+              <Cd>SEPA</Cd>
+            </SvcLvl>
+            <LclInstrm>
+              <Cd>CORE</Cd>
+            </LclInstrm>
+            <SeqTp>RCUR</SeqTp>
+          </PmtTpInf>
+          <MndtRltdInf>
+            <MndtId>SI00354362</MndtId>
+            <DtOfSgntr>2013
+-07
+-28</DtOfSgntr>
+          </MndtRltdInf>
+          <RmtInf>
+            <Ustrd>PLA
+ČILO STORITEV</Ustrd>
+          </RmtInf>
+          <Dbtr>
+            <Nm>HALCOM D.D.</Nm>
+            <PstlAdr>
+              <Ctry>SI</Ctry>
+              <AdrLine>TR
+Ž
+A
+ŠKA ULICA 118</AdrLine>
+              <AdrLine>LJUBLJANA</AdrLine>
+            </PstlAdr>
+          </Dbtr>
+          <DbtrAcct>
+            <Id>
+              <IBAN>SI56020100258361794</IBAN>
+            </Id>
+          </DbtrAcct>
+          <DbtrAgt>
+            <FinInstnId>
+              <BIC>LJBASI2X</BIC>
+            </FinInstnId>
+          </DbtrAgt>
+          <CdtrAgt>
+            <FinInstnId>
+              <BIC>HAABSI22</BIC>
+            </FinInstnId>
+          </CdtrAgt>
+          <Cdtr>
+            <Nm>EBB LJUBLJANA D.D.</Nm>
+            <PstlAdr>
+              <Ctry>SI</Ctry>
+              <AdrLine>TRŽAŠKA 118</AdrLine>
+              <AdrLine>1000 LJUBLJANA</AdrLine>
+            </PstlAdr>
+          </Cdtr>
+          <CdtrAcct>
+            <Id>
+              <IBAN>SI56330008464683166</IBAN>
+            </Id>
+          </CdtrAcct>
+        </OrgnlTxRef>
+        <EqvtAmt Ccy="EUR">120.00</EqvtAmt>
+      </TxInf>
+      <TxInf>
+        <RvslId>16NP11L2HXVGJYPQ</RvslId>
+        <OrgnlInstrId>DB_05</OrgnlInstrId>
+        <OrgnlEndToEndId>SI00120</OrgnlEndToEndId>
+        <OrgnlInstdAmt Ccy="EUR">120.00</OrgnlInstdAmt>
+        <RvsdInstdAmt Ccy="EUR">120.00</RvsdInstdAmt>
+        <ChrgBr>SLEV</ChrgBr>
+        <RvslRsnInf/>
+        <OrgnlTxRef>
+          <ReqdColltnDt>2013-10-22</ReqdColltnDt>
+          <CdtrSchmeId>
+            <Id>
+              <PrvtId>
+                <Othr>
+                  <Id>SI02ZZZ12345678</Id>
+                  <SchmeNm>
+                    <Prtry>TXID</Prtry>
+                  </SchmeNm>
+                </Othr>
+              </PrvtId>
+            </Id>
+          </CdtrSchmeId>
+          <PmtTpInf>
+            <SvcLvl>
+              <Cd>SEPA</Cd>
+            </SvcLvl>
+            <LclInstrm>
+              <Cd>CORE</Cd>
+            </LclInstrm>
+            <SeqTp>RCUR</SeqTp>
+          </PmtTpInf>
+          <MndtRltdInf>
+            <MndtId>SI00354362</MndtId>
+            <DtOfSgntr>2013
+-07
+-28</DtOfSgntr>
+          </MndtRltdInf>
+          <RmtInf>
+            <Ustrd>PLA
+ČILO STORITEV</Ustrd>
+          </RmtInf>
+          <Dbtr>
+            <Nm>HALCOM D.D.</Nm>
+            <PstlAdr>
+              <Ctry>SI</Ctry>
+              <AdrLine>TR
+Ž
+A
+ŠKA ULICA 118</AdrLine>
+              <AdrLine>LJUBLJANA</AdrLine>
+            </PstlAdr>
+          </Dbtr>
+          <DbtrAcct>
+            <Id>
+              <IBAN>SI56020100258361794</IBAN>
+            </Id>
+          </DbtrAcct>
+          <DbtrAgt>
+            <FinInstnId>
+              <BIC>LJBASI2X</BIC>
+            </FinInstnId>
+          </DbtrAgt>
+          <CdtrAgt>
+            <FinInstnId>
+              <BIC>HAABSI22</BIC>
+            </FinInstnId>
+          </CdtrAgt>
+          <Cdtr>
+            <Nm>EBB LJUBLJANA D.D.</Nm>
+            <PstlAdr>
+              <Ctry>SI</Ctry>
+              <AdrLine>TRŽAŠKA 118</AdrLine>
+              <AdrLine>1000 LJUBLJANA</AdrLine>
+            </PstlAdr>
+          </Cdtr>
+          <CdtrAcct>
+            <Id>
+              <IBAN>SI56330008464683166</IBAN>
+            </Id>
+          </CdtrAcct>
+        </OrgnlTxRef>
+        <EqvtAmt Ccy="EUR">120.00</EqvtAmt>
+      </TxInf>
+    </OrgnlPmtInfAndRvsl>
+    <OrgnlPmtInfAndRvsl>
+      <RvslPmtInfId>MSG-20250610-210828-B2</RvslPmtInfId>
+      <OrgnlPmtInfId>SDD_120</OrgnlPmtInfId>
+      <OrgnlNbOfTxs>1</OrgnlNbOfTxs>
+      <OrgnlCtrlSum>120.00</OrgnlCtrlSum>
+      <BtchBookg>false</BtchBookg>
+      <PmtInfRvsl>false</PmtInfRvsl>
+      <TxInf>
+        <RvslId>16NP11L2HXVGJYPQ</RvslId>
+        <OrgnlInstrId>DB_05</OrgnlInstrId>
+        <OrgnlEndToEndId>SI00120</OrgnlEndToEndId>
+        <OrgnlInstdAmt Ccy="EUR">120.00</OrgnlInstdAmt>
+        <RvsdInstdAmt Ccy="EUR">120.00</RvsdInstdAmt>
+        <ChrgBr>SLEV</ChrgBr>
+        <RvslRsnInf/>
+        <OrgnlTxRef>
+          <ReqdColltnDt>2013-10-22</ReqdColltnDt>
+          <CdtrSchmeId>
+            <Id>
+              <PrvtId>
+                <Othr>
+                  <Id>SI02ZZZ12345678</Id>
+                  <SchmeNm>
+                    <Prtry>TXID</Prtry>
+                  </SchmeNm>
+                </Othr>
+              </PrvtId>
+            </Id>
+          </CdtrSchmeId>
+          <PmtTpInf>
+            <SvcLvl>
+              <Cd>SEPA</Cd>
+            </SvcLvl>
+            <LclInstrm>
+              <Cd>CORE</Cd>
+            </LclInstrm>
+            <SeqTp>RCUR</SeqTp>
+          </PmtTpInf>
+          <MndtRltdInf>
+            <MndtId>SI00354362</MndtId>
+            <DtOfSgntr>2013
+-07
+-28</DtOfSgntr>
+          </MndtRltdInf>
+          <RmtInf>
+            <Ustrd>PLA
+ČILO STORITEV</Ustrd>
+          </RmtInf>
+          <Dbtr>
+            <Nm>HALCOM D.D.</Nm>
+            <PstlAdr>
+              <Ctry>SI</Ctry>
+              <AdrLine>TR
+Ž
+A
+ŠKA ULICA 118</AdrLine>
+              <AdrLine>LJUBLJANA</AdrLine>
+            </PstlAdr>
+          </Dbtr>
+          <DbtrAcct>
+            <Id>
+              <IBAN>SI56020100258361794</IBAN>
+            </Id>
+          </DbtrAcct>
+          <DbtrAgt>
+            <FinInstnId>
+              <BIC>LJBASI2X</BIC>
+            </FinInstnId>
+          </DbtrAgt>
+          <CdtrAgt>
+            <FinInstnId>
+              <BIC>HAABSI22</BIC>
+            </FinInstnId>
+          </CdtrAgt>
+          <Cdtr>
+            <Nm>EBB LJUBLJANA D.D.</Nm>
+            <PstlAdr>
+              <Ctry>SI</Ctry>
+              <AdrLine>TRŽAŠKA 118</AdrLine>
+              <AdrLine>1000 LJUBLJANA</AdrLine>
+            </PstlAdr>
+          </Cdtr>
+          <CdtrAcct>
+            <Id>
+              <IBAN>SI56330008464683166</IBAN>
+            </Id>
+          </CdtrAcct>
+        </OrgnlTxRef>
+        <EqvtAmt Ccy="EUR">120.00</EqvtAmt>
+      </TxInf>
+      <TxInf>
+        <RvslId>16NP11L2HXVGJYPQ</RvslId>
+        <OrgnlInstrId>DB_05</OrgnlInstrId>
+        <OrgnlEndToEndId>SI00120</OrgnlEndToEndId>
+        <OrgnlInstdAmt Ccy="EUR">120.00</OrgnlInstdAmt>
+        <RvsdInstdAmt Ccy="EUR">120.00</RvsdInstdAmt>
+        <ChrgBr>SLEV</ChrgBr>
+        <RvslRsnInf/>
+        <OrgnlTxRef>
+          <ReqdColltnDt>2013-10-22</ReqdColltnDt>
+          <CdtrSchmeId>
+            <Id>
+              <PrvtId>
+                <Othr>
+                  <Id>SI02ZZZ12345678</Id>
+                  <SchmeNm>
+                    <Prtry>TXID</Prtry>
+                  </SchmeNm>
+                </Othr>
+              </PrvtId>
+            </Id>
+          </CdtrSchmeId>
+          <PmtTpInf>
+            <SvcLvl>
+              <Cd>SEPA</Cd>
+            </SvcLvl>
+            <LclInstrm>
+              <Cd>CORE</Cd>
+            </LclInstrm>
+            <SeqTp>RCUR</SeqTp>
+          </PmtTpInf>
+          <MndtRltdInf>
+            <MndtId>SI00354362</MndtId>
+            <DtOfSgntr>2013
+-07
+-28</DtOfSgntr>
+          </MndtRltdInf>
+          <RmtInf>
+            <Ustrd>PLA
+ČILO STORITEV</Ustrd>
+          </RmtInf>
+          <Dbtr>
+            <Nm>HALCOM D.D.</Nm>
+            <PstlAdr>
+              <Ctry>SI</Ctry>
+              <AdrLine>TR
+Ž
+A
+ŠKA ULICA 118</AdrLine>
+              <AdrLine>LJUBLJANA</AdrLine>
+            </PstlAdr>
+          </Dbtr>
+          <DbtrAcct>
+            <Id>
+              <IBAN>SI56020100258361794</IBAN>
+            </Id>
+          </DbtrAcct>
+          <DbtrAgt>
+            <FinInstnId>
+              <BIC>LJBASI2X</BIC>
+            </FinInstnId>
+          </DbtrAgt>
+          <CdtrAgt>
+            <FinInstnId>
+              <BIC>HAABSI22</BIC>
+            </FinInstnId>
+          </CdtrAgt>
+          <Cdtr>
+            <Nm>EBB LJUBLJANA D.D.</Nm>
+            <PstlAdr>
+              <Ctry>SI</Ctry>
+              <AdrLine>TRŽAŠKA 118</AdrLine>
+              <AdrLine>1000 LJUBLJANA</AdrLine>
+            </PstlAdr>
+          </Cdtr>
+          <CdtrAcct>
+            <Id>
+              <IBAN>SI56330008464683166</IBAN>
+            </Id>
+          </CdtrAcct>
+        </OrgnlTxRef>
+        <EqvtAmt Ccy="EUR">120.00</EqvtAmt>
+      </TxInf>
+    </OrgnlPmtInfAndRvsl>
+  </CstmrPmtRvsl>
+</Document>

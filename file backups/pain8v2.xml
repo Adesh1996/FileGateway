@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.008.001.02">
+    <CstmrDrctDbtInitn>
+        <GrpHdr>
+            <MsgId>491436</MsgId>
+            <CreDtTm>2024-04-30T09:27:47</CreDtTm>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>2000.00</CtrlSum>
+            <InitgPty>
+                <Nm>Intiating Party Name</Nm>
+                <Id>
+                    <OrgId>
+                        <Othr>
+                            <Id>Party Id</Id>
+                        </Othr>
+                    </OrgId>
+                </Id>
+            </InitgPty>
+        </GrpHdr>
+        <PmtInf>
+            <PmtInfId>19239039</PmtInfId>
+            <PmtMtd>DD</PmtMtd>
+            <PmtTpInf>
+                <SvcLvl>
+                    <Cd>NURG</Cd>
+                </SvcLvl>
+                <LclInstrm>
+                    <Cd>CCD</Cd>
+                </LclInstrm>
+                <CtgyPurp>
+                    <Prtry>Mortgage</Prtry>
+                </CtgyPurp>
+            </PmtTpInf>
+            <ReqdColltnDt>2024-04-30</ReqdColltnDt>
+            <Cdtr>
+                <Nm>Creditor Name</Nm>
+                <PstlAdr>
+                    <StrtNm>Creditor Street Name</StrtNm>
+                    <TwnNm>Creditor Town Name</TwnNm>
+                    <CtrySubDvsn>Creditor Country Subdivision</CtrySubDvsn>
+                    <Ctry>US</Ctry>
+                </PstlAdr>
+                <Id>
+                    <OrgId>
+                        <Othr>
+                            <Id>CompanyId</Id>
+                        </Othr>
+                    </OrgId>
+                </Id>
+            </Cdtr>
+            <CdtrAcct>
+                <Id>
+                    <Othr>
+                        <Id>Creditor Account Number</Id>
+                    </Othr>
+                </Id>
+                <Ccy>USD</Ccy>
+            </CdtrAcct>
+            <CdtrAgt>
+                <FinInstnId>
+                    <ClrSysMmbId>
+                        <ClrSysId>
+                            <Cd>USABA</Cd>
+                        </ClrSysId>
+                        <MmbId>026015079</MmbId>
+                    </ClrSysMmbId>
+                    <PstlAdr>
+                        <Ctry>US</Ctry>
+                    </PstlAdr>
+                </FinInstnId>
+            </CdtrAgt>
+            <DrctDbtTxInf>
+                <PmtId>
+                    <EndToEndId>Payment end to end Id</EndToEndId>
+                </PmtId>
+                <InstdAmt Ccy="USD">2000.00</InstdAmt>
+                <DbtrAgt>
+                    <FinInstnId>
+                        <ClrSysMmbId>
+                            <ClrSysId>
+                                <Cd>USABA</Cd>
+                            </ClrSysId>
+                            <MmbId>USABA number</MmbId>
+                        </ClrSysMmbId>
+                    </FinInstnId>
+                </DbtrAgt>
+                <Dbtr>
+                    <Nm>Debtor Name</Nm>
+                    <PstlAdr>
+                        <TwnNm>Debtor Town Name</TwnNm>
+                        <CtrySubDvsn>Debtor country subdivision</CtrySubDvsn>
+                        <Ctry>US</Ctry>
+                    </PstlAdr>
+                </Dbtr>
+                <DbtrAcct>
+                    <Id>
+                        <Othr>
+                            <Id>Debtor Account Number</Id>
+                        </Othr>
+                    </Id>
+                    <Tp>
+                        <Cd>CACC</Cd>
+                    </Tp>
+                </DbtrAcct>
+            </DrctDbtTxInf>
+        </PmtInf>
+    </CstmrDrctDbtInitn>
+</Document>

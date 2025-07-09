@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance">
+    <CstmrCdtTrfInitn>
+        <GrpHdr>
+            <MsgId>MSG-20250428-001</MsgId>
+            <CreDtTm>2025-04-28T12:00:00</CreDtTm>
+            <NbOfTxs>3</NbOfTxs>
+            <CtrlSum>6000.00</CtrlSum>
+             <InitgPty> 
+                <Nm>ACME Corporation</Nm> 
+                <PstlAdr> 
+                    <StrtNm>Main Street</StrtNm>
+                    <BldgNb>10</BldgNb>
+                    <PstCd>12345</PstCd>
+                    <TwnNm>Sampletown</TwnNm>
+                    <Ctry>DE</Ctry>
+					<AddrLine>Line1</AddrLine>
+					<AddrLine>Line2</AddrLine>
+					<AddrLine>Line3</AddrLine>
+                </PstlAdr>
+                <Id> 
+                    <OrgId>
+                        <Othr>
+                            <Id>ACME123456789</Id>
+                        </Othr>
+                    </OrgId>
+                </Id>
+                <CtryOfRes>DE</CtryOfRes>
+                <CtctDtls> 
+                    <Nm>John Doe</Nm>
+                    <PhneNb>+49123456789</PhneNb>
+                    <EmailAdr>john.doe@acme.com</EmailAdr>
+                </CtctDtls>
+            </InitgPty>
+        </GrpHdr>
+		<PmtInf>
+            <PmtInfId>BATCH-001</PmtInfId>
+            <PmtMtd>TRF</PmtMtd>
+            <ReqdExctnDt>2025-04-29</ReqdExctnDt>
+            <Dbtr>
+                <Nm>Debtor Company 1</Nm>
+				 <PstlAdr> 
+                    <Ctry>DE</Ctry>
+                </PstlAdr>
+            </Dbtr>
+            <DbtrAcct>
+                <Id>
+                    <IBAN>DE12500105170648489890</IBAN>
+                </Id>
+				<Ccy>USD</Ccy>
+				 <Nm>Debtor Name</Nm>
+            </DbtrAcct>
+            <DbtrAgt>
+                <FinInstnId>
+                    <BIC>DEUTDEFFXXX</BIC>
+					 <PstlAdr> 
+                    <Ctry>DE</Ctry>
+                </PstlAdr>
+                </FinInstnId>
+            </DbtrAgt>
+            <ChrgBr>SLEV</ChrgBr>
+
+            <CdtTrfTxInf>
+                <PmtId>
+                    <EndToEndId>TXN-001-01</EndToEndId>
+                </PmtId>
+				<PmtTpInf>
+			<InstrPrty>HIGH</InstrPrty>
+                <SvcLvl>
+                    <Cd>SEPA</Cd>
+                </SvcLvl>
+            </PmtTpInf>
+                <Amt>
+                    <InstdAmt Ccy="EUR">1000.00</InstdAmt>
+                </Amt>
+				<ChrgBr>SHAR</ChrgBr>
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BIC>CreditorAgentBIC1</BIC>
+						<Nm>UNKNOWN</Nm>
+						<AddrLine>Creditor Transaction Line1</AddrLine>
+						 <PstlAdr> 
+                  
+                    <Ctry>DE</Ctry>
+                </PstlAdr>
+                    </FinInstnId>
+                </CdtrAgt>
+                <Cdtr>
+                    <Nm>Creditor A2 ACS</Nm>
+					 <PstlAdr> 
+                    <Ctry>DE</Ctry>
+                </PstlAdr>
+				<CtryOfRes>IE</CtryOfRes>
+				<CtctDtls>
+				<EmailAdr>Creditor1@gmail.com</EmailAdr>
+				</CtctDtls>
+                </Cdtr>
+                <CdtrAcct>
+                    <Id>
+                        <IBAN>FR1420041010050500013M02606</IBAN>
+                    </Id>
+					<Nm>ACS</Nm>
+                </CdtrAcct>
+				<RmtInf>
+				<Ustrd>JET2.COM LIMITED</Ustrd>
+				</RmtInf>
+            </CdtTrfTxInf>
+
+            <CdtTrfTxInf>
+                <PmtId>
+                    <EndToEndId>TXN-001-02</EndToEndId>
+                </PmtId>
+				<PmtTpInf>
+			<InstrPrty>HIGH</InstrPrty>
+                <SvcLvl>
+                    <Cd>SEPA</Cd>
+                </SvcLvl>
+            </PmtTpInf>
+                <Amt>
+                    <InstdAmt Ccy="EUR">2000.00</InstdAmt>
+                </Amt>
+				<ChrgBr>SHAR</ChrgBr>
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BIC>CreditorAgentBIC2</BIC>
+						<Nm>UNKNOWN</Nm>
+						 <PstlAdr> 
+                  
+                    <Ctry>DE</Ctry>
+                </PstlAdr>
+                    </FinInstnId>
+                </CdtrAgt>
+                <Cdtr>
+                    <Nm>Creditor A1</Nm>
+					 <PstlAdr> 
+                    <Ctry>DE</Ctry>
+                </PstlAdr>
+				<CtryOfRes>IE</CtryOfRes>
+				<CtctDtls>
+				<EmailAdr>Creditor2@gmail.com</EmailAdr>
+				</CtctDtls>
+                </Cdtr>
+                <CdtrAcct>
+                    <Id>
+                        <IBAN>FR1420041010050500013M02606</IBAN>
+                    </Id>
+					<Nm>AQUILLA</Nm>
+                </CdtrAcct>
+				<RmtInf>
+				<Ustrd>JET2.COM LIMITED</Ustrd>
+				</RmtInf>
+            </CdtTrfTxInf>
+			  <CdtTrfTxInf>
+                <PmtId>
+                    <EndToEndId>TXN-001-03</EndToEndId>
+                </PmtId>
+				<PmtTpInf>
+			<InstrPrty>HIGH</InstrPrty>
+                <SvcLvl>
+                    <Cd>SEPA</Cd>
+                </SvcLvl>
+            </PmtTpInf>
+                <Amt>
+                    <InstdAmt Ccy="EUR">3000.00</InstdAmt>
+                </Amt>
+				<ChrgBr>SHAR</ChrgBr>
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BIC>CreditorAgentBIC3</BIC>
+						<Nm>UNKNOWN</Nm>
+						 <PstlAdr> 
+                  
+                    <Ctry>DE</Ctry>
+                </PstlAdr>
+                    </FinInstnId>
+                </CdtrAgt>
+                <Cdtr>
+                    <Nm>Creditor A3</Nm>
+					 <PstlAdr> 
+                    <Ctry>DE</Ctry>
+                </PstlAdr>
+				<CtryOfRes>IE</CtryOfRes>
+				<CtctDtls>
+				<EmailAdr>Creditor3@gmail.com</EmailAdr>
+				</CtctDtls>
+                </Cdtr>
+                <CdtrAcct>
+                    <Id>
+                        <IBAN>FR1420041010050500013M02606</IBAN>
+                    </Id>
+					<Nm>AQUILLA</Nm>
+                </CdtrAcct>
+				<RmtInf>
+				<Ustrd>JET3.COM LIMITED</Ustrd>
+				</RmtInf>
+            </CdtTrfTxInf>
+        </PmtInf>
+
+       
+        
+
+</CstmrCdtTrfInitn>
+</Document>

@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09">
+        
+    <CstmrCdtTrfInitn>
+                
+        <GrpHdr>
+                        
+            <MsgId>MSG-RC01-20250607221401293</MsgId>
+                        
+            <CreDtTm>2025-06-07T22:14:01</CreDtTm>
+                        
+            <NbOfTxs>4</NbOfTxs>
+                        
+            <CtrlSum>2000.00</CtrlSum>
+                        
+            <InitgPty>
+                                
+                <Nm>Initiator Corp</Nm>
+                                
+                <Id>
+                                        
+                    <OrgId>
+                                                
+                        <Othr>
+                                                        
+                            <Id>INITID123</Id>
+                                                    
+                        </Othr>
+                                            
+                    </OrgId>
+                                    
+                </Id>
+                                
+                <CtctDtls>
+                                        
+                    <Nm>John Smith</Nm>
+                                        
+                    <PhneNb>+123456789</PhneNb>
+                                        
+                    <EmailAdr>contact@initiator.com</EmailAdr>
+                                    
+                </CtctDtls>
+                            
+            </InitgPty>
+                    
+        </GrpHdr>
+                
+        <!-- BATCH 1 -->
+                
+        <PmtInf>
+                        
+            <PmtInfId>PMTINF-RC01-20250607221401293</PmtInfId>
+                        
+            <PmtMtd>TRF</PmtMtd>
+                        
+            <BtchBookg>true</BtchBookg>
+                        
+            <NbOfTxs>2</NbOfTxs>
+                        
+            <CtrlSum>1000.00</CtrlSum>
+                        
+            <PmtTpInf>
+                                
+                <InstrPrty>NORM</InstrPrty>
+                                
+                <SvcLvl>
+                                        
+                    <Cd>SEPA</Cd>
+                                    
+                </SvcLvl>
+                                
+                <CtgyPurp>
+                                        
+                    <Cd>SALA</Cd>
+                                    
+                </CtgyPurp>
+                            
+            </PmtTpInf>
+                        
+            <ReqdExctnDt>2025-05-19</ReqdExctnDt>
+                        
+            <Dbtr>
+                                
+                <Nm>Alpha Corp</Nm>
+                                
+                <PstlAdr>
+                                        
+                    <StrtNm>Main Street</StrtNm>
+                                        
+                    <BldgNb>1</BldgNb>
+                                        
+                    <PstCd>1000</PstCd>
+                                        
+                    <TwnNm>London</TwnNm>
+                                        
+                    <Ctry>GB</Ctry>
+                                    
+                </PstlAdr>
+                                
+                <Id>
+                                        
+                    <OrgId>
+                                                
+                        <Othr>
+                                                        
+                            <Id>ALPHA123</Id>
+                                                    
+                        </Othr>
+                                            
+                    </OrgId>
+                                    
+                </Id>
+                            
+            </Dbtr>
+                        
+            <DbtrAcct>
+                                
+                <Id>
+                                        
+                    <IBAN>GB33BUKB20201555555555</IBAN>
+                                    
+                </Id>
+                                
+                <Ccy>EUR</Ccy>
+                            
+            </DbtrAcct>
+                        
+            <DbtrAgt>
+                                
+                <FinInstnId>
+                                        
+                    <BICFI>BARCGB22XXX</BICFI>
+                                    
+                </FinInstnId>
+                            
+            </DbtrAgt>
+                        
+            <ChrgBr>SLEV</ChrgBr>
+                        
+            <CdtTrfTxInf>
+                                
+                <PmtId>
+                                        
+                    <InstrId>INST001</InstrId>
+                                        
+                    <EndToEndId>TXN-RC01-20250607221401293</EndToEndId>
+                                    
+                </PmtId>
+                                
+                <Amt>
+                                        
+                    <InstdAmt Ccy="EUR">500.00</InstdAmt>
+                                    
+                </Amt>
+                                
+                <CdtrAgt>
+                                        
+                    <FinInstnId>
+                                                
+                        <BICFI>BNPAFRPPXXX</BICFI>
+                                            
+                    </FinInstnId>
+                                    
+                </CdtrAgt>
+                                
+                <Cdtr>
+                                        
+                    <Nm>John Doe</Nm>
+                                    
+                </Cdtr>
+                                
+                <CdtrAcct>
+                                        
+                    <Id>
+                                                
+                        <IBAN>FR7630006000011234567890189</IBAN>
+                                            
+                    </Id>
+                                    
+                </CdtrAcct>
+                                
+                <Purp>
+                                        
+                    <Cd>GDSV</Cd>
+                                    
+                </Purp>
+                                
+                <RmtInf>
+                                        
+                    <Ustrd>Invoice 123</Ustrd>
+                                    
+                </RmtInf>
+                            
+            </CdtTrfTxInf>
+                        
+            <CdtTrfTxInf>
+                                
+                <PmtId>
+                                        
+                    <InstrId>INST002</InstrId>
+                                        
+                    <EndToEndId>E2E002</EndToEndId>
+                                    
+                </PmtId>
+                                
+                <Amt>
+                                        
+                    <InstdAmt Ccy="EUR">500.00</InstdAmt>
+                                    
+                </Amt>
+                                
+                <CdtrAgt>
+                                        
+                    <FinInstnId>
+                                                
+                        <BICFI>DEUTDEFFXXX</BICFI>
+                                            
+                    </FinInstnId>
+                                    
+                </CdtrAgt>
+                                
+                <Cdtr>
+                                        
+                    <Nm>Jane Roe</Nm>
+                                    
+                </Cdtr>
+                                
+                <CdtrAcct>
+                                        
+                    <Id>
+                                                
+                        <IBAN>DE89370400440532013000</IBAN>
+                                            
+                    </Id>
+                                    
+                </CdtrAcct>
+                                
+                <RmtInf>
+                                        
+                    <Ustrd>Salary April</Ustrd>
+                                    
+                </RmtInf>
+                            
+            </CdtTrfTxInf>
+                    
+        </PmtInf>
+                
+        <!-- BATCH 2 -->
+                
+        <PmtInf>
+                        
+            <PmtInfId>PMTINF-002</PmtInfId>
+                        
+            <PmtMtd>TRF</PmtMtd>
+                        
+            <BtchBookg>false</BtchBookg>
+                        
+            <NbOfTxs>2</NbOfTxs>
+                        
+            <CtrlSum>1000.00</CtrlSum>
+                        
+            <PmtTpInf>
+                                
+                <InstrPrty>HIGH</InstrPrty>
+                                
+                <SvcLvl>
+                                        
+                    <Cd>URGP</Cd>
+                                    
+                </SvcLvl>
+                                
+                <CtgyPurp>
+                                        
+                    <Cd>SUPP</Cd>
+                                    
+                </CtgyPurp>
+                            
+            </PmtTpInf>
+                        
+            <ReqdExctnDt>2025-05-19</ReqdExctnDt>
+                        
+            <Dbtr>
+                                
+                <Nm>Beta Ltd</Nm>
+                            
+            </Dbtr>
+                        
+            <DbtrAcct>
+                                
+                <Id>
+                                        
+                    <IBAN>IT60X0542811101000000123456</IBAN>
+                                    
+                </Id>
+                                
+                <Ccy>EUR</Ccy>
+                            
+            </DbtrAcct>
+                        
+            <DbtrAgt>
+                                
+                <FinInstnId>
+                                        
+                    <BICFI>BCITITMMXXX</BICFI>
+                                    
+                </FinInstnId>
+                            
+            </DbtrAgt>
+                        
+            <ChrgBr>CRED</ChrgBr>
+                        
+            <CdtTrfTxInf>
+                                
+                <PmtId>
+                                        
+                    <InstrId>INST003</InstrId>
+                                        
+                    <EndToEndId>E2E003</EndToEndId>
+                                    
+                </PmtId>
+                                
+                <Amt>
+                                        
+                    <InstdAmt Ccy="EUR">600.00</InstdAmt>
+                                    
+                </Amt>
+                                
+                <CdtrAgt>
+                                        
+                    <FinInstnId>
+                                                
+                        <BICFI>ABNANL2AXXX</BICFI>
+                                            
+                    </FinInstnId>
+                                    
+                </CdtrAgt>
+                                
+                <Cdtr>
+                                        
+                    <Nm>Foo Bar</Nm>
+                                    
+                </Cdtr>
+                                
+                <CdtrAcct>
+                                        
+                    <Id>
+                                                
+                        <IBAN>NL91ABNA0417164300</IBAN>
+                                            
+                    </Id>
+                                    
+                </CdtrAcct>
+                                
+                <RmtInf>
+                                        
+                    <Ustrd>Invoice 789</Ustrd>
+                                    
+                </RmtInf>
+                            
+            </CdtTrfTxInf>
+                        
+            <CdtTrfTxInf>
+                                
+                <PmtId>
+                                        
+                    <InstrId>INST004</InstrId>
+                                        
+                    <EndToEndId>E2E004</EndToEndId>
+                                    
+                </PmtId>
+                                
+                <Amt>
+                                        
+                    <InstdAmt Ccy="EUR">400.00</InstdAmt>
+                                    
+                </Amt>
+                                
+                <CdtrAgt>
+                                        
+                    <FinInstnId>
+                                                
+                        <BICFI>BOFAUS3NXXX</BICFI>
+                                            
+                    </FinInstnId>
+                                    
+                </CdtrAgt>
+                                
+                <Cdtr>
+                                        
+                    <Nm>Acme Inc</Nm>
+                                    
+                </Cdtr>
+                                
+                <CdtrAcct>
+                                        
+                    <Id>
+                                                
+                        <IBAN>US123456789012345678901234</IBAN>
+                                            
+                    </Id>
+                                    
+                </CdtrAcct>
+                                
+                <RmtInf>
+                                        
+                    <Ustrd>Project payment</Ustrd>
+                                    
+                </RmtInf>
+                            
+            </CdtTrfTxInf>
+                    
+        </PmtInf>
+            
+    </CstmrCdtTrfInitn>
+    
+</Document>

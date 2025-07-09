@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?><Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance">
+    <CstmrCdtTrfInitn>
+        <GrpHdr>
+            <MsgId>MSG-20250428-001</MsgId>
+            <CreDtTm>2025-04-28T12:00:00</CreDtTm>
+            <NbOfTxs>7</NbOfTxs>
+            <CtrlSum>7000.00</CtrlSum>
+             <InitgPty> 
+                <Nm>ACME Corporation</Nm> 
+                <PstlAdr> 
+                    <StrtNm>Main Street</StrtNm>
+                    <BldgNb>10</BldgNb>
+                    <PstCd>12345</PstCd>
+                    <TwnNm>Sampletown</TwnNm>
+                    <Ctry>DE</Ctry>
+                </PstlAdr>
+                <Id> 
+                    <OrgId>
+                        <Othr>
+                            <Id>ACME123456789</Id>
+                        </Othr>
+                    </OrgId>
+                </Id>
+                <CtryOfRes>DE</CtryOfRes>
+                <CtctDtls> 
+                    <Nm>John Doe</Nm>
+                    <PhneNb>+49123456789</PhneNb>
+                    <EmailAdr>john.doe@acme.com</EmailAdr>
+                </CtctDtls>
+            </InitgPty>
+        </GrpHdr>
+
+        <!-- Batch 1 -->
+        <PmtInf>
+            <PmtInfId>BATCH-001</PmtInfId>
+            <PmtMtd>TRF</PmtMtd>
+            <NbOfTxs>2</NbOfTxs>
+            <CtrlSum>2000.00</CtrlSum>
+            <PmtTpInf>
+			<InstrPrty>HIGH</InstrPrty>
+                <SvcLvl>
+                    <Cd>SEPA</Cd>
+                </SvcLvl>
+            </PmtTpInf>
+            <ReqdExctnDt>2025-04-29</ReqdExctnDt>
+            <Dbtr>
+                <Nm>Debtor Company 1</Nm>
+            </Dbtr>
+            <DbtrAcct>
+                <Id>
+                    <IBAN>DE12500105170648489890</IBAN>
+                </Id>
+            </DbtrAcct>
+            <DbtrAgt>
+                <FinInstnId>
+                    <BIC>DEUTDEFFXXX</BIC>
+                </FinInstnId>
+            </DbtrAgt>
+            <ChrgBr>SLEV</ChrgBr>
+
+            <CdtTrfTxInf>
+                <PmtId>
+                    <EndToEndId>TXN-001-01</EndToEndId>
+                </PmtId>
+                <Amt>
+                    <InstdAmt Ccy="EUR">1000.00</InstdAmt>
+                </Amt>
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BIC>BNPAFRPPXXX</BIC>
+                    </FinInstnId>
+                </CdtrAgt>
+                <Cdtr>
+                    <Nm>Creditor A1</Nm>
+                </Cdtr>
+                <CdtrAcct>
+                    <Id>
+                        <IBAN>FR1420041010050500013M02606</IBAN>
+                    </Id>
+                </CdtrAcct>
+            </CdtTrfTxInf>
+
+            <CdtTrfTxInf>
+                <PmtId>
+                    <EndToEndId>TXN-001-02</EndToEndId>
+                </PmtId>
+                <Amt>
+                    <InstdAmt Ccy="EUR">1000.00</InstdAmt>
+                </Amt>
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BIC>ABNANL2AXXX</BIC>
+                    </FinInstnId>
+                </CdtrAgt>
+                <Cdtr>
+                    <Nm>Creditor A2</Nm>
+                </Cdtr>
+                <CdtrAcct>
+                    <Id>
+                        <IBAN>NL91ABNA0417164300</IBAN>
+                    </Id>
+                </CdtrAcct>
+            </CdtTrfTxInf>
+        </PmtInf>
+
+        <!-- Batch 2 -->
+        <PmtInf>
+            <PmtInfId>BATCH-002</PmtInfId>
+            <PmtMtd>TRF</PmtMtd>
+            <NbOfTxs>2</NbOfTxs>
+            <CtrlSum>2000.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl>
+                    <Cd>SEPA</Cd>
+                </SvcLvl>
+            </PmtTpInf>
+            <ReqdExctnDt>2025-04-29</ReqdExctnDt>
+            <Dbtr>
+                <Nm>Debtor Company 2</Nm>
+            </Dbtr>
+            <DbtrAcct>
+                <Id>
+                    <IBAN>ES9121000418450200051332</IBAN>
+                </Id>
+            </DbtrAcct>
+            <DbtrAgt>
+                <FinInstnId>
+                    <BIC>BBVAESMMXXX</BIC>
+                </FinInstnId>
+            </DbtrAgt>
+            <ChrgBr>SLEV</ChrgBr>
+
+            <CdtTrfTxInf>
+                <PmtId>
+                    <EndToEndId>TXN-002-01</EndToEndId>
+                </PmtId>
+                <Amt>
+                    <InstdAmt Ccy="EUR">1000.00</InstdAmt>
+                </Amt>
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BIC>INGBNL2AXXX</BIC>
+                    </FinInstnId>
+                </CdtrAgt>
+                <Cdtr>
+                    <Nm>Creditor B1</Nm>
+                </Cdtr>
+                <CdtrAcct>
+                    <Id>
+                        <IBAN>NL93ABNA0585619023</IBAN>
+                    </Id>
+                </CdtrAcct>
+            </CdtTrfTxInf>
+
+            <CdtTrfTxInf>
+                <PmtId>
+                    <EndToEndId>TXN-002-02</EndToEndId>
+                </PmtId>
+                <Amt>
+                    <InstdAmt Ccy="EUR">1000.00</InstdAmt>
+                </Amt>
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BIC>CHASGB2LXXX</BIC>
+                    </FinInstnId>
+                </CdtrAgt>
+                <Cdtr>
+                    <Nm>Creditor B2</Nm>
+                </Cdtr>
+                <CdtrAcct>
+                    <Id>
+                        <IBAN>GB29NWBK60161331926819</IBAN>
+                    </Id>
+                </CdtrAcct>
+            </CdtTrfTxInf>
+        </PmtInf>
+		
+		 <PmtInf>
+            <PmtInfId>BATCH-003</PmtInfId>
+            <PmtMtd>TRF</PmtMtd>
+            <NbOfTxs>2</NbOfTxs>
+            <CtrlSum>2000.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl>
+                    <Cd>SEPA</Cd>
+                </SvcLvl>
+            </PmtTpInf>
+            <ReqdExctnDt>2025-04-29</ReqdExctnDt>
+            <Dbtr>
+                <Nm>Debtor Company 2</Nm>
+            </Dbtr>
+            <DbtrAcct>
+                <Id>
+                    <IBAN>ES9121000418450200051332</IBAN>
+                </Id>
+            </DbtrAcct>
+            <DbtrAgt>
+                <FinInstnId>
+                    <BIC>BBVAESMMXXX</BIC>
+                </FinInstnId>
+            </DbtrAgt>
+            <ChrgBr>SLEV</ChrgBr>
+
+            <CdtTrfTxInf>
+                <PmtId>
+                    <EndToEndId>TXN-003-01</EndToEndId>
+                </PmtId>
+                <Amt>
+                    <InstdAmt Ccy="EUR">1000.00</InstdAmt>
+                </Amt>
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BIC>INGBNL2AXXX</BIC>
+                    </FinInstnId>
+                </CdtrAgt>
+                <Cdtr>
+                    <Nm>Creditor B1</Nm>
+                </Cdtr>
+                <CdtrAcct>
+                    <Id>
+                        <IBAN>NL93ABNA0585619023</IBAN>
+                    </Id>
+                </CdtrAcct>
+            </CdtTrfTxInf>
+
+            <CdtTrfTxInf>
+                <PmtId>
+                    <EndToEndId>TXN-003-02</EndToEndId>
+                </PmtId>
+                <Amt>
+                    <InstdAmt Ccy="EUR">1000.00</InstdAmt>
+                </Amt>
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BIC>CHASGB2LXXX</BIC>
+                    </FinInstnId>
+                </CdtrAgt>
+                <Cdtr>
+                    <Nm>Creditor B2</Nm>
+                </Cdtr>
+                <CdtrAcct>
+                    <Id>
+                        <IBAN>GB29NWBK60161331926819</IBAN>
+                    </Id>
+                </CdtrAcct>
+            </CdtTrfTxInf>
+        </PmtInf>
+		
+		 <PmtInf>
+            <PmtInfId>BATCH-004</PmtInfId>
+            <PmtMtd>TRF</PmtMtd>
+            <NbOfTxs>2</NbOfTxs>
+            <CtrlSum>1000.00</CtrlSum>
+            <PmtTpInf>
+                <SvcLvl>
+                    <Cd>SEPA</Cd>
+                </SvcLvl>
+            </PmtTpInf>
+            <ReqdExctnDt>2025-04-29</ReqdExctnDt>
+            <Dbtr>
+                <Nm>Debtor Company 2</Nm>
+            </Dbtr>
+            <DbtrAcct>
+                <Id>
+                    <IBAN>ES9121000418450200051332</IBAN>
+                </Id>
+            </DbtrAcct>
+            <DbtrAgt>
+                <FinInstnId>
+                    <BIC>BNYGB22XXX</BIC>
+                </FinInstnId>
+            </DbtrAgt>
+            <ChrgBr>SLEV</ChrgBr>
+
+            <CdtTrfTxInf>
+                <PmtId>
+                    <EndToEndId>TXN-004-01</EndToEndId>
+                </PmtId>
+                <Amt>
+                    <InstdAmt Ccy="EUR">1000.00</InstdAmt>
+                </Amt>
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BIC>INGBNL2AXXX</BIC>
+                    </FinInstnId>
+                </CdtrAgt>
+                <Cdtr>
+                    <Nm>Creditor B1</Nm>
+                </Cdtr>
+                <CdtrAcct>
+                    <Id>
+                        <IBAN>NL93ABNA0585619023</IBAN>
+                    </Id>
+                </CdtrAcct>
+            </CdtTrfTxInf>
+
+            
+        </PmtInf>
+
+</CstmrCdtTrfInitn>
+</Document>
