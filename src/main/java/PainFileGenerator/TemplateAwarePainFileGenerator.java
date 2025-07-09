@@ -1,5 +1,6 @@
 package PainFileGenerator;
 
+
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.stream.XMLOutputFactory;
@@ -26,6 +27,9 @@ public class TemplateAwarePainFileGenerator {
 
         Node appHdr = getNode(template, "AppHdr");
         Node coreBlock = getFirstChildElement(documentRoot);
+        if (coreBlock == null) {
+            throw new RuntimeException("Unable to detect core block (e.g., CstmrCdtTrfInitn) from template.");
+        }
         String coreBlockName = coreBlock.getLocalName();
 
         Element grpHdr = (Element) getNode(template, "GrpHdr");
@@ -118,14 +122,18 @@ public class TemplateAwarePainFileGenerator {
     private static Element getFirstChildElement(Node node) {
         NodeList children = node.getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
-            if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                return (Element) children.item(i);
+            Node child = children.item(i);
+            if (child.getNodeType() == Node.ELEMENT_NODE) {
+                return (Element) child;
             }
         }
         return null;
     }
 
     private static String detectTxnTag(String coreBlockName) {
+        if (coreBlockName == null) {
+            throw new IllegalArgumentException("Core block name is null. Check the structure of the template file.");
+        }
         switch (coreBlockName) {
             case "CstmrCdtTrfInitn": return "CdtTrfTxInf";
             case "CstmrDrctDbtInitn": return "DrctDbtTxInf";
@@ -152,4 +160,3 @@ public class TemplateAwarePainFileGenerator {
         }
     }
 }
-
