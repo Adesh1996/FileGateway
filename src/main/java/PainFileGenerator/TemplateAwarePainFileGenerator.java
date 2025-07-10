@@ -1,32 +1,46 @@
 package PainFileGenerator;
 
 
-import org.w3c.dom.*;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamWriter;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamWriter;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class TemplateAwarePainFileGenerator {
+	
+	public static void main(String[] args) throws Exception {
+		TemplateAwarePainFileGenerator.run(new File("F:\\Barclays BFG Project\\FileGateway\\input\\ImportantTestFile.xml"),1500,20,new File("output.xml"));
+	}
 
     public static void run(File inputTemplate, int totalTransactions, int batchCount, File outputFile) throws Exception {
         Map<Integer, Integer> batchMap = distributeTransactions(totalTransactions, batchCount);
 
-        Document template = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputTemplate);
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(true);
+        Document template = dbf.newDocumentBuilder().parse(inputTemplate);
         template.getDocumentElement().normalize();
 
         Element documentRoot = template.getDocumentElement();
         String rootNs = documentRoot.getNamespaceURI();
 
         Node appHdr = getNode(template, "AppHdr");
-        Node coreBlock = getFirstChildElement(documentRoot);
+        Element coreBlock = getFirstElementByDepth(documentRoot);
         if (coreBlock == null) {
             throw new RuntimeException("Unable to detect core block (e.g., CstmrCdtTrfInitn) from template.");
         }
@@ -49,16 +63,14 @@ public class TemplateAwarePainFileGenerator {
             copyNode(appHdr, writer);
         }
 
-        // Generate new GrpHdr
         String msgId = "MSG-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
         writer.writeStartElement("GrpHdr");
         writeTag(writer, "MsgId", msgId);
         writeTag(writer, "CreDtTm", OffsetDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
-        writer.writeStartElement("NbOfTxs"); writer.writeCharacters(String.valueOf(totalTransactions)); writer.writeEndElement();
-        writer.writeStartElement("CtrlSum"); writer.writeCharacters(String.format("%.2f", totalTransactions * 100.0)); writer.writeEndElement();
+        writeTag(writer, "NbOfTxs", String.valueOf(totalTransactions));
+        writeTag(writer, "CtrlSum", String.format("%.2f", totalTransactions * 100.0));
         writer.writeEndElement(); // GrpHdr
 
-        int txnGlobalIndex = 1;
         for (int b = 1; b <= batchCount; b++) {
             int txnCount = batchMap.get(b);
             double ctrlSum = txnCount * 100.0;
@@ -83,7 +95,6 @@ public class TemplateAwarePainFileGenerator {
                 writer.writeEndElement(); // Amt
 
                 writer.writeEndElement(); // CdtTrfTxInf
-                txnGlobalIndex++;
             }
 
             writer.writeEndElement(); // PmtInf
@@ -119,12 +130,12 @@ public class TemplateAwarePainFileGenerator {
         return list.getLength() > 0 ? list.item(0) : null;
     }
 
-    private static Element getFirstChildElement(Node node) {
-        NodeList children = node.getChildNodes();
-        for (int i = 0; i < children.getLength(); i++) {
-            Node child = children.item(i);
-            if (child.getNodeType() == Node.ELEMENT_NODE) {
-                return (Element) child;
+    private static Element getFirstElementByDepth(Node parent) {
+        NodeList list = parent.getChildNodes();
+        for (int i = 0; i < list.getLength(); i++) {
+            Node node = list.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                return (Element) node;
             }
         }
         return null;
