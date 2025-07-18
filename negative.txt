@@ -4,127 +4,137 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.*;
 import java.io.File;
+import java.io.FileWriter;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
-public class InvalidPainFileGenerator {
+///adesh
+
+public class PainInvalidFileGenerator {
 
     public static void main(String[] args) throws Exception {
-        String inputPath = "valid_template.xml";
+        List<String> reasonCodes = Arrays.asList("FF02", "RR10", "DT02", "AM05", "TD02", "DU02", "DT01", "RC01", "AC03", "AM01", "BE05");
+        String inputPath = "template/pain.001.001.03.xml";
         String outputDir = "output/";
-        String reasonCode = "FF02"; // Change to required code
-        String versionLabel = "PAIN1"; // e.g., PAIN1, PAIN8
+        String fileFormat = "pain.001.001.03";
 
-        generateInvalidFile(inputPath, outputDir, reasonCode, versionLabel);
+        for (String code : reasonCodes) {
+            generateInvalidFile(code, inputPath, outputDir, fileFormat);
+        }
     }
 
-    public static void generateInvalidFile(String inputPath, String outputDir, String reasonCode, String versionLabel) throws Exception {
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        dbFactory.setNamespaceAware(false);
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(new File(inputPath));
-
+    private static void generateInvalidFile(String reasonCode, String inputPath, String outputDir, String fileFormat) throws Exception {
         switch (reasonCode) {
             case "FF02":
-                if (versionLabel.startsWith("PAIN1")) {
-                    insertInvalidTag(doc, "/Document/CstmrCdtTrfInitn/PmtInf/CdtTrfTxInf");
-                    removeRequiredParent(doc, "/Document/CstmrCdtTrfInitn/PmtInf");
+                if (fileFormat.equals("pain.001.001.03")) {
+                    createMissingParentTagFile(reasonCode, inputPath, outputDir);
                 }
                 break;
             case "RR10":
-                insertInvalidCharacter(doc, "/Document/CstmrCdtTrfInitn/PmtInf/PmtInfId");
+                if (fileFormat.equals("pain.001.001.03")) {
+                    createReservedCharFile(reasonCode, inputPath, outputDir);
+                }
                 break;
             case "DT02":
-                setInvalidCreationDate(doc, "/Document/CstmrCdtTrfInitn/GrpHdr/CreDtTm");
+                if (fileFormat.equals("pain.001.001.03")) {
+                    createInvalidCreationDateFile(reasonCode, inputPath, outputDir);
+                }
                 break;
             case "AM05":
-                generateDuplicateFile(inputPath, outputDir); // handled in another method
-                return;
+                if (fileFormat.equals("pain.001.001.03")) {
+                    createDuplicateMsgIdFile(reasonCode, inputPath, outputDir);
+                }
+                break;
             case "TD02":
-                generateMalformedFile(outputDir + "TD02_InvalidFile.xml");
-                return;
+                if (fileFormat.equals("pain.001.001.03")) {
+                    createUnreadableXmlFile(reasonCode, outputDir);
+                }
+                break;
             case "DU02":
-                insertDuplicateBatch(doc, versionLabel);
+                if (fileFormat.equals("pain.001.001.03")) {
+                    createDuplicateBatchIdFile(reasonCode, inputPath, outputDir);
+                }
                 break;
             default:
-                System.out.println("Unknown reason code");
-        }
-
-        writeXml(doc, outputDir + reasonCode + "_InvalidFile.xml");
-    }
-
-    private static void insertInvalidTag(Document doc, String xpathExpr) throws Exception {
-        XPath xpath = XPathFactory.newInstance().newXPath();
-        Node parent = (Node) xpath.evaluate(xpathExpr, doc, XPathConstants.NODE);
-        if (parent != null) {
-            Element invalidTag = doc.createElement("InvalidTag");
-            invalidTag.setTextContent("ThisTagIsInvalid");
-            parent.appendChild(invalidTag);
+                System.out.println("Reason code " + reasonCode + " not supported for file format " + fileFormat);
         }
     }
 
-    private static void removeRequiredParent(Document doc, String xpathExpr) throws Exception {
-        XPath xpath = XPathFactory.newInstance().newXPath();
-        Node parent = (Node) xpath.evaluate(xpathExpr, doc, XPathConstants.NODE);
-        if (parent != null && parent.getParentNode() != null) {
-            parent.getParentNode().removeChild(parent); // Remove <PmtInf>
+    private static void createMissingParentTagFile(String reasonCode, String inputPath, String outputDir) throws Exception {
+        File file = new File(outputDir + reasonCode + "_MissingParent.xml");
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                    "<Document xmlns=\"urn:iso:std:iso:20022:tech:xsd:pain.001.001.03\">\n" +
+                    "    <CstmrCdtTrfInitn>\n" +
+                    "        <GrpHdr>\n" +
+                    "            <MsgId>MSG-" + reasonCode + "</MsgId>\n" +
+                    "        </GrpHdr>\n" +
+                    "        <!-- Missing PmtInf Tag here -->\n" +
+                    "    </CstmrCdtTrfInitn>\n" +
+                    "</Document>");
         }
     }
 
-    private static void insertInvalidCharacter(Document doc, String xpathExpr) throws Exception {
-        XPath xpath = XPathFactory.newInstance().newXPath();
-        Node node = (Node) xpath.evaluate(xpathExpr, doc, XPathConstants.NODE);
-        if (node != null) {
-            node.setTextContent("Invalid&Name"); // '&' is reserved XML character
+    private static void createReservedCharFile(String reasonCode, String inputPath, String outputDir) throws Exception {
+        Document doc = getDocument(inputPath);
+        Node msgIdNode = (Node) javax.xml.xpath.XPathFactory.newInstance().newXPath()
+                .evaluate("//MsgId", doc, javax.xml.xpath.XPathConstants.NODE);
+        msgIdNode.setTextContent("INVALID&MSG<>");
+        saveDocument(doc, new File(outputDir + reasonCode + "_ReservedChars.xml"));
+    }
+
+    private static void createInvalidCreationDateFile(String reasonCode, String inputPath, String outputDir) throws Exception {
+        Document doc = getDocument(inputPath);
+        Node creDtTm = (Node) javax.xml.xpath.XPathFactory.newInstance().newXPath()
+                .evaluate("//CreDtTm", doc, javax.xml.xpath.XPathConstants.NODE);
+        Calendar calendar = Calendar.getInstance();
+        if (new Random().nextBoolean()) {
+            calendar.add(Calendar.DATE, -40);
+        } else {
+            calendar.add(Calendar.HOUR, 30);
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        creDtTm.setTextContent(sdf.format(calendar.getTime()));
+        saveDocument(doc, new File(outputDir + reasonCode + "_InvalidDate.xml"));
+    }
+
+    private static void createDuplicateMsgIdFile(String reasonCode, String inputPath, String outputDir) throws Exception {
+        Document doc = getDocument(inputPath);
+        Node msgIdNode = (Node) javax.xml.xpath.XPathFactory.newInstance().newXPath()
+                .evaluate("//MsgId", doc, javax.xml.xpath.XPathConstants.NODE);
+        String duplicateId = "DUPLICATE-MSG-ID-AM05";
+        msgIdNode.setTextContent(duplicateId);
+        saveDocument(doc, new File(outputDir + reasonCode + "_1.xml"));
+        saveDocument(doc, new File(outputDir + reasonCode + "_2.xml"));
+    }
+
+    private static void createUnreadableXmlFile(String reasonCode, String outputDir) throws Exception {
+        try (FileWriter writer = new FileWriter(new File(outputDir + reasonCode + "_Invalid.xml"))) {
+            writer.write("<Doc><Invalid<<>>><</Tag></Doc>");
         }
     }
 
-    private static void setInvalidCreationDate(Document doc, String xpathExpr) throws Exception {
-        XPath xpath = XPathFactory.newInstance().newXPath();
-        Node dateNode = (Node) xpath.evaluate(xpathExpr, doc, XPathConstants.NODE);
-        if (dateNode != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            Date tooOld = new Date(System.currentTimeMillis() - (35L * 24 * 60 * 60 * 1000)); // 35 days old
-            dateNode.setTextContent(sdf.format(tooOld));
+    private static void createDuplicateBatchIdFile(String reasonCode, String inputPath, String outputDir) throws Exception {
+        Document doc = getDocument(inputPath);
+        NodeList pmtInfs = doc.getElementsByTagNameNS("urn:iso:std:iso:20022:tech:xsd:pain.001.001.03", "PmtInf");
+        if (pmtInfs.getLength() >= 1) {
+            Node duplicate = pmtInfs.item(0).cloneNode(true);
+            pmtInfs.item(0).getParentNode().appendChild(duplicate);
         }
+        saveDocument(doc, new File(outputDir + reasonCode + "_DuplicateBatch.xml"));
     }
 
-    private static void generateDuplicateFile(String inputPath, String outputDir) throws Exception {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-
-        Document doc1 = db.parse(new File(inputPath));
-        Document doc2 = db.parse(new File(inputPath));
-
-        // Same MsgId, PmtInfId, etc. to simulate duplicate file scenario
-        writeXml(doc1, outputDir + "AM05_DuplicateFile1.xml");
-        writeXml(doc2, outputDir + "AM05_DuplicateFile2.xml");
+    private static Document getDocument(String filePath) throws Exception {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        return builder.parse(new File(filePath));
     }
 
-    private static void generateMalformedFile(String outputPath) throws Exception {
-        String brokenXml = "<Document><BadRoot><MissingEnd>";
-        try (java.io.FileWriter fw = new java.io.FileWriter(outputPath)) {
-            fw.write(brokenXml);
-        }
-    }
-
-    private static void insertDuplicateBatch(Document doc, String versionLabel) throws Exception {
-        XPath xpath = XPathFactory.newInstance().newXPath();
-        Node originalBatch = (Node) xpath.evaluate("/Document/CstmrCdtTrfInitn/PmtInf", doc, XPathConstants.NODE);
-        if (originalBatch != null) {
-            Node duplicate = originalBatch.cloneNode(true);
-            doc.getDocumentElement().appendChild(duplicate);
-        }
-    }
-
-    private static void writeXml(Document doc, String path) throws Exception {
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        Result output = new StreamResult(new File(path));
-        Source input = new DOMSource(doc);
+    private static void saveDocument(Document doc, File outFile) throws Exception {
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.transform(input, output);
+        transformer.transform(new DOMSource(doc), new StreamResult(outFile));
     }
 }
