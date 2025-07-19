@@ -1,140 +1,216 @@
 import org.w3c.dom.*;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.FileWriter;
-import java.text.SimpleDateFormat;
+import java.io.*;
+import java.nio.file.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
-///adesh
-
-public class PainInvalidFileGenerator {
+public class ISOInvalidFileGenerator {
 
     public static void main(String[] args) throws Exception {
-        List<String> reasonCodes = Arrays.asList("FF02", "RR10", "DT02", "AM05", "TD02", "DU02", "DT01", "RC01", "AC03", "AM01", "BE05");
-        String inputPath = "template/pain.001.001.03.xml";
-        String outputDir = "output/";
-        String fileFormat = "pain.001.001.03";
+        File inputFile = new File("input.xml");
+        List<String> reasonCodes = Arrays.asList(
+                "AM05", "TD02", "DU02", "FF02_Invalid_tag", "FF02_Invalid_Order",
+                "FF02_MissingParent_Tag", "RR10", "DT02_Past", "DT02_Future", "BH01",
+                "FF02_BatchBooking", "FF04_InvalidSvc_batch", "FF04_InvalidSvc_Trx", "FF06_InvalidCtgyPurp"
+        );
 
-        for (String code : reasonCodes) {
-            generateInvalidFile(code, inputPath, outputDir, fileFormat);
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        dbFactory.setNamespaceAware(true);
+
+        for (String reasonCode : reasonCodes) {
+            try {
+                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                Document doc = dBuilder.parse(inputFile);
+                doc.getDocumentElement().normalize();
+
+                String format = detectFormat(doc);
+                if (format == null) {
+                    System.out.println("Unrecognized format. Skipping reason code: " + reasonCode);
+                    continue;
+                }
+
+                injectInvalidData(reasonCode, doc, format);
+                String fileName = inputFile.getName().replace(".xml", "") + "_" + format + "_" + reasonCode + ".xml";
+                saveDocument(doc, new File(fileName));
+                System.out.println("Generated: " + fileName);
+
+            } catch (Exception ex) {
+                System.err.println("Failed for reason: " + reasonCode);
+                ex.printStackTrace();
+            }
         }
     }
 
-    private static void generateInvalidFile(String reasonCode, String inputPath, String outputDir, String fileFormat) throws Exception {
+    private static String detectFormat(Document doc) {
+        Element root = doc.getDocumentElement();
+        NodeList docChildren = root.getChildNodes();
+
+        for (int i = 0; i < docChildren.getLength(); i++) {
+            Node node = docChildren.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                String localName = node.getLocalName();
+                if (localName != null) {
+                    return localName.toLowerCase();  // e.g., pain.001.001.03
+                }
+            }
+        }
+        return null;
+    }
+
+    private static void injectInvalidData(String reasonCode, Document doc, String format) {
         switch (reasonCode) {
-            case "FF02":
-                if (fileFormat.equals("pain.001.001.03")) {
-                    createMissingParentTagFile(reasonCode, inputPath, outputDir);
-                }
-                break;
-            case "RR10":
-                if (fileFormat.equals("pain.001.001.03")) {
-                    createReservedCharFile(reasonCode, inputPath, outputDir);
-                }
-                break;
-            case "DT02":
-                if (fileFormat.equals("pain.001.001.03")) {
-                    createInvalidCreationDateFile(reasonCode, inputPath, outputDir);
-                }
-                break;
             case "AM05":
-                if (fileFormat.equals("pain.001.001.03")) {
-                    createDuplicateMsgIdFile(reasonCode, inputPath, outputDir);
+                // Duplicate MsgId and PmtInfId
+                NodeList pmtInfs = doc.getElementsByTagNameNS("*", "PmtInf");
+                if (pmtInfs.getLength() > 0) {
+                    Node pmtInf = pmtInfs.item(0);
+                    Node parent = pmtInf.getParentNode();
+                    Node duplicate = pmtInf.cloneNode(true);
+                    parent.appendChild(duplicate);
                 }
                 break;
+
             case "TD02":
-                if (fileFormat.equals("pain.001.001.03")) {
-                    createUnreadableXmlFile(reasonCode, outputDir);
-                }
+                // Create invalid structure manually
+                Element brokenRoot = doc.createElement("Broken");
+                doc.replaceChild(brokenRoot, doc.getDocumentElement());
                 break;
+
             case "DU02":
-                if (fileFormat.equals("pain.001.001.03")) {
-                    createDuplicateBatchIdFile(reasonCode, inputPath, outputDir);
+                // Duplicate batch IDs
+                NodeList batchNodes = doc.getElementsByTagNameNS("*", "PmtInfId");
+                if (batchNodes.getLength() > 0) {
+                    String firstId = batchNodes.item(0).getTextContent();
+                    for (int i = 1; i < batchNodes.getLength(); i++) {
+                        batchNodes.item(i).setTextContent(firstId);
+                    }
                 }
                 break;
+
+            case "FF02_Invalid_tag":
+                // Add undefined tag
+                NodeList docRoots = doc.getElementsByTagNameNS("*", "Document");
+                if (docRoots.getLength() > 0) {
+                    Element newTag = doc.createElement("Invalid<Xml>");
+                    docRoots.item(0).appendChild(newTag);
+                }
+                break;
+
+            case "FF02_Invalid_Order":
+                // Swap order of tags
+                NodeList pmtInfList = doc.getElementsByTagNameNS("*", "PmtInf");
+                if (pmtInfList.getLength() > 0) {
+                    Element pmtInf = (Element) pmtInfList.item(0);
+                    NodeList children = pmtInf.getChildNodes();
+                    if (children.getLength() >= 2) {
+                        Node first = children.item(0);
+                        Node second = children.item(1);
+                        pmtInf.removeChild(first);
+                        pmtInf.insertBefore(first, second.getNextSibling());
+                    }
+                }
+                break;
+
+            case "FF02_MissingParent_Tag":
+                // Remove Document or root-level tag
+                Element root = doc.getDocumentElement();
+                NodeList children = root.getChildNodes();
+                if (children.getLength() > 0) {
+                    root.removeChild(children.item(0));
+                }
+                break;
+
+            case "RR10":
+                // Insert reserved character
+                NodeList nameNodes = doc.getElementsByTagNameNS("*", "Nm");
+                if (nameNodes.getLength() > 0) {
+                    nameNodes.item(0).setTextContent("Invalid & Name");
+                }
+                break;
+
+            case "DT02_Past":
+                // Set CreDtTm to 31 days back
+                NodeList creDt = doc.getElementsByTagNameNS("*", "CreDtTm");
+                if (creDt.getLength() > 0) {
+                    creDt.item(0).setTextContent("2024-06-01T09:00:00");
+                }
+                break;
+
+            case "DT02_Future":
+                // Set CreDtTm 2 days in future
+                NodeList creDtF = doc.getElementsByTagNameNS("*", "CreDtTm");
+                if (creDtF.getLength() > 0) {
+                    creDtF.item(0).setTextContent("2030-01-01T00:00:00");
+                }
+                break;
+
+            case "BH01":
+                // Invalid PmtMtd
+                NodeList pmtMtds = doc.getElementsByTagNameNS("*", "PmtMtd");
+                if (pmtMtds.getLength() > 0) {
+                    pmtMtds.item(0).setTextContent("INVALID");
+                }
+                break;
+
+            case "FF02_BatchBooking":
+                // Invalid BtchBookg value
+                NodeList bbList = doc.getElementsByTagNameNS("*", "BtchBookg");
+                if (bbList.getLength() > 0) {
+                    bbList.item(0).setTextContent("maybe");
+                }
+                break;
+
+            case "FF04_InvalidSvc_batch":
+            case "FF04_InvalidSvc_Trx":
+                NodeList svcLvl = doc.getElementsByTagNameNS("*", "SvcLvl");
+                if (svcLvl.getLength() > 0) {
+                    for (int i = 0; i < svcLvl.getLength(); i++) {
+                        Node cd = getFirstChildByName(svcLvl.item(i), "Cd");
+                        if (cd != null) {
+                            cd.setTextContent("1234");
+                        }
+                    }
+                }
+                break;
+
+            case "FF06_InvalidCtgyPurp":
+                NodeList ctgy = doc.getElementsByTagNameNS("*", "CtgyPurp");
+                for (int i = 0; i < ctgy.getLength(); i++) {
+                    Node cd = getFirstChildByName(ctgy.item(i), "Cd");
+                    if (cd != null) {
+                        cd.setTextContent("XYZ123");
+                    }
+                }
+                break;
+
             default:
-                System.out.println("Reason code " + reasonCode + " not supported for file format " + fileFormat);
+                System.out.println("Unsupported reason code: " + reasonCode);
         }
     }
 
-    private static void createMissingParentTagFile(String reasonCode, String inputPath, String outputDir) throws Exception {
-        File file = new File(outputDir + reasonCode + "_MissingParent.xml");
-        try (FileWriter writer = new FileWriter(file)) {
-            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                    "<Document xmlns=\"urn:iso:std:iso:20022:tech:xsd:pain.001.001.03\">\n" +
-                    "    <CstmrCdtTrfInitn>\n" +
-                    "        <GrpHdr>\n" +
-                    "            <MsgId>MSG-" + reasonCode + "</MsgId>\n" +
-                    "        </GrpHdr>\n" +
-                    "        <!-- Missing PmtInf Tag here -->\n" +
-                    "    </CstmrCdtTrfInitn>\n" +
-                    "</Document>");
+    private static Node getFirstChildByName(Node parent, String name) {
+        NodeList list = parent.getChildNodes();
+        for (int i = 0; i < list.getLength(); i++) {
+            if (name.equalsIgnoreCase(list.item(i).getLocalName())) {
+                return list.item(i);
+            }
         }
+        return null;
     }
 
-    private static void createReservedCharFile(String reasonCode, String inputPath, String outputDir) throws Exception {
-        Document doc = getDocument(inputPath);
-        Node msgIdNode = (Node) javax.xml.xpath.XPathFactory.newInstance().newXPath()
-                .evaluate("//MsgId", doc, javax.xml.xpath.XPathConstants.NODE);
-        msgIdNode.setTextContent("INVALID&MSG<>");
-        saveDocument(doc, new File(outputDir + reasonCode + "_ReservedChars.xml"));
-    }
-
-    private static void createInvalidCreationDateFile(String reasonCode, String inputPath, String outputDir) throws Exception {
-        Document doc = getDocument(inputPath);
-        Node creDtTm = (Node) javax.xml.xpath.XPathFactory.newInstance().newXPath()
-                .evaluate("//CreDtTm", doc, javax.xml.xpath.XPathConstants.NODE);
-        Calendar calendar = Calendar.getInstance();
-        if (new Random().nextBoolean()) {
-            calendar.add(Calendar.DATE, -40);
-        } else {
-            calendar.add(Calendar.HOUR, 30);
+    private static void saveDocument(Document doc, File file) throws TransformerException, IOException {
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer t = tf.newTransformer();
+        t.setOutputProperty(OutputKeys.INDENT, "yes");
+        t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        DOMSource source = new DOMSource(doc);
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            StreamResult result = new StreamResult(fos);
+            t.transform(source, result);
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        creDtTm.setTextContent(sdf.format(calendar.getTime()));
-        saveDocument(doc, new File(outputDir + reasonCode + "_InvalidDate.xml"));
-    }
-
-    private static void createDuplicateMsgIdFile(String reasonCode, String inputPath, String outputDir) throws Exception {
-        Document doc = getDocument(inputPath);
-        Node msgIdNode = (Node) javax.xml.xpath.XPathFactory.newInstance().newXPath()
-                .evaluate("//MsgId", doc, javax.xml.xpath.XPathConstants.NODE);
-        String duplicateId = "DUPLICATE-MSG-ID-AM05";
-        msgIdNode.setTextContent(duplicateId);
-        saveDocument(doc, new File(outputDir + reasonCode + "_1.xml"));
-        saveDocument(doc, new File(outputDir + reasonCode + "_2.xml"));
-    }
-
-    private static void createUnreadableXmlFile(String reasonCode, String outputDir) throws Exception {
-        try (FileWriter writer = new FileWriter(new File(outputDir + reasonCode + "_Invalid.xml"))) {
-            writer.write("<Doc><Invalid<<>>><</Tag></Doc>");
-        }
-    }
-
-    private static void createDuplicateBatchIdFile(String reasonCode, String inputPath, String outputDir) throws Exception {
-        Document doc = getDocument(inputPath);
-        NodeList pmtInfs = doc.getElementsByTagNameNS("urn:iso:std:iso:20022:tech:xsd:pain.001.001.03", "PmtInf");
-        if (pmtInfs.getLength() >= 1) {
-            Node duplicate = pmtInfs.item(0).cloneNode(true);
-            pmtInfs.item(0).getParentNode().appendChild(duplicate);
-        }
-        saveDocument(doc, new File(outputDir + reasonCode + "_DuplicateBatch.xml"));
-    }
-
-    private static Document getDocument(String filePath) throws Exception {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware(true);
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        return builder.parse(new File(filePath));
-    }
-
-    private static void saveDocument(Document doc, File outFile) throws Exception {
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.transform(new DOMSource(doc), new StreamResult(outFile));
     }
 }
